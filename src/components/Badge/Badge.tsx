@@ -13,7 +13,7 @@ type Size = 'small' | 'medium';
 
 export interface BadgeProps {
   /** The content to display inside the badge. */
-  children?: string;
+  children?: React.ReactNode;
   /** Colors and labels the badge with the given status. */
   status?: Status;
   /** Render a pip showing the progress of a given task. */
