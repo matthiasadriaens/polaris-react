@@ -227,6 +227,14 @@ export function Listbox({
         // reset when number of listbox children change
         if (nextListLength !== length) {
           reset = true;
+
+          // do not reset if onKeyToBottom passed in and navItems updating
+          const navItems = getNavigableOptions();
+          if (onKeyToBottom && navItems.length === length + 1) {
+            reset = false;
+          }
+
+          setReset(reset);
           return nextListLength;
         }
 
@@ -234,10 +242,16 @@ export function Listbox({
       });
 
       if (reset) {
-        setReset(true);
+        setReset(reset);
       }
     }
-  }, [children, listLength, getFirstNavigableOption, activeOption]);
+  }, [
+    children,
+    listLength,
+    getFirstNavigableOption,
+    activeOption,
+    onKeyToBottom,
+  ]);
 
   useEffect(() => {
     if (loading || listLength <= 1) return;
@@ -337,7 +351,8 @@ export function Listbox({
           if (key === 'down') {
             currentIndex = currentIndex === lastIndex ? 0 : currentIndex + 1;
           } else {
-            currentIndex--;
+            currentIndex =
+              nextIndex === lastIndex ? nextIndex : currentIndex - 1;
           }
 
           // restart while loop to find next valid option
