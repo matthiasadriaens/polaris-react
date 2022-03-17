@@ -137,6 +137,13 @@ $prefix-horizontal-spacing: var(--p-space-2);
   &:-webkit-autofill {
     border-radius: var(--p-border-radius-1);
   }
+
+  &.suggestion {
+    &::selection {
+      color: var(--p-text-disabled);
+      background: transparent;
+    }
+  }
 }
 
 .Input-hasClearButton {
